@@ -18,6 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #maps urls to our main app, only need one per app, will link to url.py in app directory
     path('home/', include('App.urls')),
 ]
