@@ -4,12 +4,21 @@ from django.http import HttpResponse, request
 # Create your views here.
 def home(request):
 <<<<<<< HEAD
+<<<<<<< HEAD
     return render(request, 'App/home.html')
 =======
     return render(request, 'App/home.html')
 
 def upload(request):
     return HttpResponse("""<h1>Upload Home</h1>""")
+=======
+    result = process()
+    context = {
+        'stats': result[0],
+        'img_src': result[1], 
+    }
+    return render(request, 'App/home.html', context)
+>>>>>>> parent of ac0dd03 (Merge branch 'main' of https://github.com/rishixyz9/HACKUTD-RKD)
 
 def process():
     loaded_model = tf.keras.models.load_model('ML_Model/fruit_classifier.h5')
