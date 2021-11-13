@@ -10,12 +10,10 @@ import tensorflow as tf
 
 # Create your views here.
 def home(request):
-    result = process()
-    context = {
-        'stats': result[0],
-        'img_src': result[1], 
-    }
-    return render(request, 'App/home.html', context)
+    return render(request, 'App/home.html')
+
+def upload(request):
+    return HttpResponse("""<h1>Upload Home</h1>""")
 
 def process():
     loaded_model = tf.keras.models.load_model('ML_Model/fruit_classifier.h5')
