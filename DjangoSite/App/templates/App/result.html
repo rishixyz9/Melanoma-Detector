@@ -4,8 +4,9 @@
 {% block content %}
   
   <h2 class="text-center">Results</h2>
-  {% if cMel %}
   <img src="{{img_url}}" width="224" height="224">
+  {% if cMel %}
+  
   <p>Chance of Melanoma: {{cMel}}%</p>
   <p>Chance of Not Melanoma: {{cNMel}}%</p>
   <p>{{chance}}</p>

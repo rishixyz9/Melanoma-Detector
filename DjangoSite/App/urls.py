@@ -9,7 +9,5 @@ urlpatterns = [
     #home/results
     path('results/', views.result, name='app-result'),
     #home/livefeed
-    path('livefeed/', views.video, name='app-livefeed'),
-    #For text on predicitve live imaging
-    path('livepred/', views.video_feed, name='app-livepred')
+    path('livefeed/', views.getCap, name='app-livefeed'),
 ]

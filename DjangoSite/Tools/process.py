@@ -7,7 +7,6 @@ from PIL import Image
 
 def process(image_path):
     image_path = '.' + image_path
-    print(image_path)
     loaded_model = tf.keras.models.load_model('./ML_Model/finalfinal.h5')
     img = image.load_img(image_path, target_size=(224, 224))
     plt.imshow(img)

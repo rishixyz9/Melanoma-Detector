@@ -14,6 +14,7 @@ import cv2
 import threading
 from Tools.process import process
 from Tools.process import init_model
+from Tools.cv2live import getCapture
 from asgiref.sync import async_to_sync
 
 # Create your views here.
@@ -47,6 +48,21 @@ def result(request):
 
 def video(request):
     return render(request, 'App/livefeed.html')
+
+def getCap(request):
+    filename={}
+    filename['img_url']='/media/' + getCapture()
+    print(filename['img_url'])
+    result = process(filename['img_url'])
+    filename['cMel'] = "{:.4f}".format(result[0][0]*100)
+    filename['cNMel'] = "{:.4f}".format(result[0][1]*100)
+    if result[0][0] >= .5:
+        filename['chance'] = 'You are at risk of having melanoma. Please see a doctor as soon as possible.'
+    else:
+        filename['chance'] = 'It seems you are not at risk of melanoma. Still consult a doctor as our diagnosis is not medical advise.'
+    filename['result'] = result
+    
+    return render(request, 'App/result.html', filename)
 
 #Below code courtesy of https://github.com/sawardekar/Django_VideoStream
 def video_feed(request):
