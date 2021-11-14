@@ -7,6 +7,13 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse, request
 from .forms import ImageForm
 from .models import ImageModel
+from .models import *
+from django.core.mail import EmailMessage
+from django.views.decorators import gzip
+from django.http import StreamingHttpResponse
+import cv2
+import threading
+import random
 
 # Create your views here.
 def home(request):
@@ -21,3 +28,35 @@ def upload(request):
 
 def result(request):
     return render(request, 'App/result.html')
+
+#Below code courtesy of https://github.com/sawardekar/Django_VideoStream
+def video_feed(request):
+    return StreamingHttpResponse(gen(VideoCamera()),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
+
+#to capture video class
+class VideoCamera(object):
+    def __init__(self):
+        self.video = cv2.VideoCapture(0)
+        (self.grabbed, self.frame) = self.video.read() # (did we get the image, the image)
+        threading.Thread(target=self.update, args=()).start()
+
+    def __del__(self):
+        self.video.release()
+
+    def get_frame(self):
+        image = self.frame
+        _, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes(), jpeg
+
+    def update(self):
+        while True:
+            (self.grabbed, self.frame) = self.video.read()
+
+def gen(camera):
+    while True:
+        frame, jpeg = camera.get_frame()
+        # we have a function that given nparray returns % chance of melanoma
+        # number = random.randrange(1,100)
+        yield (b'--frame\r\n'   
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + frame + b'\r\n\r\n')

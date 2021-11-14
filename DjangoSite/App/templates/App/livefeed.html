@@ -1,0 +1,14 @@
+<!---from https://github.com/sibtc/django-upload-example/blob/master/mysite/templates/upload.html-->
+{% extends 'base.html' %}
+
+<style>
+    .myDiv {
+        width: 50%;
+    }
+</style>
+{% block content %}
+<h2>Live Feed</h2>
+<div class="myDiv">
+    <img src="{% url 'app-livefeed' %}">
+</div>
+{% endblock %}
