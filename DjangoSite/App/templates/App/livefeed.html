@@ -2,10 +2,64 @@
 <!--https://davidwalsh.name/browser-camera-->
 {% extends 'base.html' %}
 {% block content %}
-
 <h2>Live Feed</h2>
 
 <div>
+    <form method="post" enctype="multipart/form-data" class="float-left submit-button" style="margin: 5%;">
+        <div style="margin: 10%;">
+            {% csrf_token %}
+            <button id='snap' type="submit" class="btn-primary">Snap Photo!</button>
+        </div>
+    </form>
+    <video id="video" width="640" height="480" autoplay></video>
+    <!-- <button id="snap" class="float-left submit-button">Snap Photo</button> -->
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <input type="hidden" id="Url" data-url="{% url 'app-livefeed' %}" />
+
+    
+    <script>
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+
+        // Get access to the camera!
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Not adding `{ audio: true }` since we only want video now
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+            //video.src = window.URL.createObjectURL(stream);
+            video.srcObject = stream;
+            video.play();
+        });
+    }
+
+    // Trigger photo take
+    // Trigger photo take, moves to results page
+        document.getElementById("snap").addEventListener("click", function() {
+            context.drawImage(video, 0, 0, 640, 480);
+            //context.drawImage(video, 0, 0, 640, 480);
+            
+            // get image data as string
+            const imageString = canvas.toDataURL();
+            
+            // send image to server
+            fetch('http://localhost:8000/home/livefeed/', {
+                method: "POST",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                imageString: imageString, 
+                }),
+            })
+        });
+    </script>
+
+    
+    
+    
+    <!-- <video src={% url 'app-livefeed' %}></video> -->
+    <!-- <video id="myVidPlayer" controls muted autoplay></video> -->
 </div>
 {% endblock %}
-{}
+
