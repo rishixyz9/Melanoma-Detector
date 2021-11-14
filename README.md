@@ -1,5 +1,9 @@
 # HACKUTD-RKD
 
+Rishabh Vemparala (rishixyz9)
+Dax Collison (codeCollision4)
+Kanishk Garg (KanishkGar)
+
 ## Inspiration
 Millions of people each year are afflicted with Melanoma and we wanted to try to build a tool that would help easily quell worries people may have about their skin.
 ## What it does
