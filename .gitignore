@@ -1,0 +1,5 @@
+env/
+DjangoSite/venv/
+DjangoSite/env/
+*.pyc
+*.pyc

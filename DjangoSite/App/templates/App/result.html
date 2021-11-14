@@ -1,0 +1,16 @@
+<!---from https://github.com/sibtc/django-upload-example/blob/master/mysite/templates/upload.html-->
+{% extends 'base.html' %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{% block content %}
+  
+  <h2 class="text-center">Results</h2>
+  <img src="{{img_url}}" width="224" height="224">
+  {% if cMel %}
+  
+  <p>Chance of Melanoma: {{cMel}}%</p>
+  <p>Chance of Not Melanoma: {{cNMel}}%</p>
+  <p>{{chance}}</p>
+  {% else %}
+  <p class="text-center" style="color: red;font-size: 30px;font-weight: bold;"> Please upload an image first </p>
+  {% endif %}
+{% endblock %}
