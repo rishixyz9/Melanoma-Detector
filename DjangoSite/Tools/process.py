@@ -18,11 +18,11 @@ def process(image_path):
 
 class init_model:
     def __init__(self) -> None:
-        self.loaded_model = tf.keras.models.load_model('./ML_Model/MelanomaFinal.h5')
+        self.loaded_model = tf.keras.models.load_model('./ML_Model/finalfinal.h5')
     def process(self, img):
         img.resize((224,224))
         img = np.expand_dims(img, axis=0)
-        img = img/255
+        img = img/500
         result = self.loaded_model.predict(img)
         return result[0] # the chance that it's melanoma
 

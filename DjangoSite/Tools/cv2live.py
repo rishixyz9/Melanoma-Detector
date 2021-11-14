@@ -15,5 +15,5 @@ def getCapture():
     webcam.release()
     cv2.waitKey(1650)
     cv2.destroyAllWindows()
-    shutil.move(file, "D:\Github\HACKUTD-RKD\DjangoSite\media")
+    shutil.move(file, r"C:\Users\kanis\Desktop\clonedlmao\DjangoSite\media")
     return file
