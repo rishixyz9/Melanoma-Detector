@@ -7,11 +7,11 @@ import tensorflow as tf
 def process(image_path):
     image_path = '.' + image_path
     print(image_path)
-    loaded_model = tf.keras.models.load_model('./ML_Model/MelanomaFinal.h5')
-    img = image.load_img(image_path, target_size=(224, 224))
+    loaded_model = tf.keras.models.load_model('./ML_Model/finalfinal.h5')
+    img = image.load_img(image_path, target_size=(224, 224, 3))
     plt.imshow(img)
     img = np.expand_dims(img, axis=0)
-
+    img = img/255
     result=loaded_model.predict(img)
     obj = [result[0], image_path]
     return(obj)

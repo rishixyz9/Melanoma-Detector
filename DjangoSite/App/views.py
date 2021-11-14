@@ -1,4 +1,3 @@
-
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, CreateView
@@ -21,7 +20,9 @@ def home(request):
 
 def resultScreen(request, arg):
     result = process(arg['img_url'])
-    if result[0][0] == 1:
+    arg['cMel'] = "{:.4f}".format(result[0][0]*100)
+    arg['cNMel'] = "{:.4f}".format(result[0][1]*100)
+    if result[0][0] >= .5:
         arg['chance'] = 'You are at risk of having melanoma. Please see a doctor as soon as possible.'
     else:
         arg['chance'] = 'It seems you are not at risk of melanoma. Still consult a doctor as our diagnosis is not medical advise.'
