@@ -14,6 +14,8 @@ from django.http import StreamingHttpResponse
 import cv2
 import threading
 from Tools.process import process
+from Tools.process import init_model
+from asgiref.sync import async_to_sync
 
 # Create your views here.
 def home(request):
@@ -42,9 +44,12 @@ def upload(request):
 def result(request):
     return render(request, 'App/result.html')
 
+def video(request):
+    return render(request, 'App/livefeed.html')
+
 #Below code courtesy of https://github.com/sawardekar/Django_VideoStream
 def video_feed(request):
-    return StreamingHttpResponse(gen(VideoCamera()),
+    return StreamingHttpResponse(gen(),
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
 #to capture video class
@@ -66,10 +71,16 @@ class VideoCamera(object):
         while True:
             (self.grabbed, self.frame) = self.video.read()
 
-def gen(camera):
+def gen():
+    camera = VideoCamera()
+    model = init_model()
     while True:
         frame, jpeg = camera.get_frame()
+        processed_str = str(model.process(jpeg))
+        print(processed_str)
+        #TODO figure out why it shows path to url and not text 
+        #Possible idea convert text to image and stream img on html
         # we have a function that given nparray returns % chance of melanoma
         # number = random.randrange(1,100)
         yield (b'--frame\r\n'   
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + frame + b'\r\n\r\n')
+               b'Content-Type: text/plain\r\n\r\n' + processed_str + b'\r\n\r\n')
