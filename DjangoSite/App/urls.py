@@ -7,5 +7,7 @@ urlpatterns = [
     #home/upload
     path('upload/', views.upload, name='app-upload'),
     #home/results
-    path('results/', views.result, name='app-result')
+    path('results/', views.result, name='app-result'),
+    #home/livefeed
+    path('livefeed/', views.video_feed, name='app-livefeed')
 ]
