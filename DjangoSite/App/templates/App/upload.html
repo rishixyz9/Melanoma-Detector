@@ -2,14 +2,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Upload</h2>
-  <form method="post" enctype="multipart/form-data">
+<div>
+  <h2 class="row justify-content-center" style="margin: 5%;">Upload</h2>
+  <h3 class="row justify-content-center">select a picture of the suspected melanoma and press upload file</h3> 
+  <h5 class="row justify-content-center">only .png/.jpg/.jpeg extensions will work </h4>
+
+  <form method="post" enctype="multipart/form-data" class="row justify-content-center" style="margin: 5%;">
     {% csrf_token %}
-    <input type="file" name="document">
-    <button type="submit">Upload file</button>
+    <div style="margin: 10%;">
+      <input type="file" name="document">
+      <button type="submit" class="btn-primary">Upload file</button>
+    </div>
   </form>
   {% if url %}
     <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
   {% endif %}
+</div>
 {% endblock %}
       
