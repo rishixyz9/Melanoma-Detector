@@ -21,7 +21,12 @@ def home(request):
 
 def resultScreen(request, arg):
     result = process(arg['img_url'])
-    arg['result'] = result[0]
+    if result[0][0] == 1:
+        arg['chance'] = 'You are at risk of having melanoma. Please see a doctor as soon as possible.'
+    else:
+        arg['chance'] = 'It seems you are not at risk of melanoma. Still consult a doctor as our diagnosis is not medical advise.'
+    arg['result'] = result
+    
     return render(request, 'App/result.html', arg)
 
 def upload(request):
